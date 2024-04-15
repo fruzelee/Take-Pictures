@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
     ) { isGranted ->
         if (isGranted) {
             Log.i("test", "Permission granted")
+            shouldShowCamera.value = true // 👈🏽
         } else {
             Log.i("test", "Permission denied")
         }
@@ -59,6 +60,7 @@ class MainActivity : ComponentActivity() {
                 android.Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
                 Log.i("test", "Permission previously granted")
+                shouldShowCamera.value = true // 👈🏽
             }
 
             ActivityCompat.shouldShowRequestPermissionRationale(
