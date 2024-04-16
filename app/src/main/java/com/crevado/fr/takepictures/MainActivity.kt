@@ -7,11 +7,15 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import coil.compose.rememberImagePainter
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -47,7 +51,15 @@ class MainActivity : ComponentActivity() {
                     onImageCaptured = ::handleImageCapture,
                     onError = { Log.e("test", "View error:", it) }
                 )
+                if (shouldShowPhoto.value) {
+                    Image(
+                        painter = rememberImagePainter(photoUri),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
+
         }
 
         requestCameraPermission()
@@ -78,6 +90,9 @@ class MainActivity : ComponentActivity() {
     private fun handleImageCapture(uri: Uri) {
         Log.i("test", "Image Captured: $uri")
         shouldShowCamera.value = false
+
+        photoUri = uri
+        shouldShowPhoto.value = true
     }
 
     private fun getOutputDirectory(): File {
