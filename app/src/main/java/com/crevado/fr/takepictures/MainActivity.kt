@@ -34,6 +34,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private lateinit var photoUri: Uri
+    private var shouldShowPhoto: MutableState<Boolean> = mutableStateOf(false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
